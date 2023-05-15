@@ -201,7 +201,8 @@ func (p *staticPolicy) validateState(s state.State) error {
 		}
 		// state is empty initialize
 		allCPUs := p.topology.CPUDetails.CPUs()
-		s.SetDefaultCPUSet(allCPUs)
+		nonReservedCPUs := allCPUs.Difference(p.reservedCPUs)
+		s.SetDefaultCPUSet(nonReservedCPUs)
 		return nil
 	}
 
